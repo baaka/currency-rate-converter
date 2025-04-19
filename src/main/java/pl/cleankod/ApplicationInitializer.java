@@ -21,7 +21,7 @@ import pl.cleankod.exchange.entrypoint.service.AccountLookupService;
 import pl.cleankod.exchange.provider.AccountInMemoryRepository;
 import pl.cleankod.exchange.provider.CurrencyConversionNbpService;
 import pl.cleankod.exchange.provider.nbp.ExchangeRatesNbpClient;
-import pl.cleankod.exchange.provider.nbp.decoder.ErrorDecoderNbpClient;
+import pl.cleankod.exchange.provider.nbp.decoder.ExchangeRatesNbpClienErrorDecoder;
 import pl.cleankod.exchange.provider.nbp.model.RateTableAndCurrencyCacheKey;
 import pl.cleankod.exchange.provider.nbp.model.RateWrapper;
 
@@ -46,7 +46,7 @@ public class ApplicationInitializer {
                 .client(new ApacheHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .errorDecoder(new ErrorDecoderNbpClient())
+                .errorDecoder(new ExchangeRatesNbpClienErrorDecoder())
                 .target(ExchangeRatesNbpClient.class, nbpApiBaseUrl);
 
         boolean enableNpbExchangeRatesCache = environment.getProperty(
