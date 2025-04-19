@@ -9,6 +9,8 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import pl.cleankod.exchange.core.cache.InMemoryCachingClient;
+import pl.cleankod.exchange.core.cache.InMemoryLruCache;
 import pl.cleankod.exchange.core.gateway.AccountRepository;
 import pl.cleankod.exchange.core.gateway.CurrencyConversionService;
 import pl.cleankod.exchange.core.service.AccountLookupService;
@@ -21,6 +23,8 @@ import pl.cleankod.exchange.provider.AccountInMemoryRepository;
 import pl.cleankod.exchange.provider.CurrencyConversionNbpService;
 import pl.cleankod.exchange.provider.nbp.ExchangeRatesNbpClient;
 import pl.cleankod.exchange.provider.nbp.decoder.ErrorDecoderNbpClient;
+import pl.cleankod.exchange.provider.nbp.model.RateTableAndCurrencyCacheKey;
+import pl.cleankod.exchange.provider.nbp.model.RateWrapper;
 
 import java.util.Currency;
 
@@ -39,12 +43,32 @@ public class ApplicationInitializer {
     @Bean
     ExchangeRatesNbpClient exchangeRatesNbpClient(Environment environment) {
         String nbpApiBaseUrl = environment.getRequiredProperty("provider.nbp-api.base-url");
-        return Feign.builder()
+        ExchangeRatesNbpClient feignClient = Feign.builder()
                 .client(new ApacheHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
                 .errorDecoder(new ErrorDecoderNbpClient())
                 .target(ExchangeRatesNbpClient.class, nbpApiBaseUrl);
+
+        boolean enableNpbExchangeRatesCache = environment.getProperty(
+                "provider.nbp-api.exchange-rates.cache.enabled",
+                Boolean.class,
+                false);
+        if (enableNpbExchangeRatesCache) {
+            Integer nbpExchangeRateCacheMaxSize = environment.getProperty(
+                    "provider.nbp-api.exchange-rate.cache.size",
+                    Integer.class,
+                    200);
+
+            InMemoryCachingClient<RateTableAndCurrencyCacheKey, RateWrapper> cache = new InMemoryCachingClient<>(
+                    key -> feignClient.fetch(key.table(), key.currency()),
+                    new InMemoryLruCache<>(nbpExchangeRateCacheMaxSize)
+            );
+
+            return (table, currency) -> cache.fetch(new RateTableAndCurrencyCacheKey(table, currency));
+        }
+
+        return feignClient;
     }
 
     @Bean
