@@ -9,8 +9,8 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import pl.cleankod.exchange.core.cache.InMemoryCachingClient;
-import pl.cleankod.exchange.core.cache.InMemoryLruCache;
+import pl.cleankod.cache.CacheInMemoryClient;
+import pl.cleankod.cache.inmemory.CacheInMemoryLru;
 import pl.cleankod.exchange.core.gateway.AccountRepository;
 import pl.cleankod.exchange.core.gateway.CurrencyConversionService;
 import pl.cleankod.exchange.core.usecase.FindAccountAndConvertCurrencyUseCase;
@@ -59,9 +59,9 @@ public class ApplicationInitializer {
                     Integer.class,
                     200);
 
-            InMemoryCachingClient<RateTableAndCurrencyCacheKey, RateWrapper> cache = new InMemoryCachingClient<>(
+            CacheInMemoryClient<RateTableAndCurrencyCacheKey, RateWrapper> cache = new CacheInMemoryClient<>(
                     key -> feignClient.fetch(key.table(), key.currency()),
-                    new InMemoryLruCache<>(nbpExchangeRateCacheMaxSize)
+                    new CacheInMemoryLru<>(nbpExchangeRateCacheMaxSize)
             );
 
             return (table, currency) -> cache.fetch(new RateTableAndCurrencyCacheKey(table, currency));

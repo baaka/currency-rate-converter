@@ -1,19 +1,21 @@
-package pl.cleankod.exchange.core.cache
+package pl.cleankod.cache
 
+import pl.cleankod.cache.CacheInMemoryClient
+import pl.cleankod.cache.inmemory.CacheInMemoryLru
 import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicInteger
 
-class InMemoryCachingClientSpecification extends Specification {
+class CacheInMemoryClientSpecification extends Specification {
     def "should fetch and cache a value"() {
         given:
         def fetchCounter = new AtomicInteger()
-        def cache = new InMemoryCachingClient<String, String>(
+        def cache = new CacheInMemoryClient<String, String>(
                 { key ->
                     fetchCounter.incrementAndGet()
                     return "value-for-${key}"
                 },
-                new InMemoryLruCache<>(10)
+                new CacheInMemoryLru<>(10)
         )
 
         when:
@@ -29,9 +31,9 @@ class InMemoryCachingClientSpecification extends Specification {
 
     def "should evict least recently used entry when cache size exceeded"() {
         given:
-        def cache = new InMemoryCachingClient<Integer, Integer>(
+        def cache = new CacheInMemoryClient<Integer, Integer>(
                 { it * 10 },
-                new InMemoryLruCache<>(3)
+                new CacheInMemoryLru<>(3)
         )
 
         when:

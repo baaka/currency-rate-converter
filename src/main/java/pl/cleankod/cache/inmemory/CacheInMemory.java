@@ -1,9 +1,9 @@
-package pl.cleankod.exchange.core.cache;
+package pl.cleankod.cache.inmemory;
 
 import java.util.LinkedHashMap;
 
-public class InMemoryCache<K, V> extends LinkedHashMap<K, V> {
-    public InMemoryCache(int initialCapacity,
+public class CacheInMemory<K, V> extends LinkedHashMap<K, V> {
+    public CacheInMemory(int initialCapacity,
                          float loadFactor,
                          boolean accessOrder) {
         super(initialCapacity, loadFactor, accessOrder);
