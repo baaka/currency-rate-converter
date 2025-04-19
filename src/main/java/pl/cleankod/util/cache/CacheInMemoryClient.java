@@ -1,6 +1,6 @@
-package pl.cleankod.cache;
+package pl.cleankod.util.cache;
 
-import pl.cleankod.cache.inmemory.CacheInMemory;
+import pl.cleankod.util.cache.inmemory.CacheInMemory;
 
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
