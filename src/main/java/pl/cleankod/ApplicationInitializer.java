@@ -13,12 +13,11 @@ import pl.cleankod.exchange.core.cache.InMemoryCachingClient;
 import pl.cleankod.exchange.core.cache.InMemoryLruCache;
 import pl.cleankod.exchange.core.gateway.AccountRepository;
 import pl.cleankod.exchange.core.gateway.CurrencyConversionService;
-import pl.cleankod.exchange.core.service.AccountLookupService;
-import pl.cleankod.exchange.core.usecase.AccountLookupWithOptionalCurrencyUseCase;
 import pl.cleankod.exchange.core.usecase.FindAccountAndConvertCurrencyUseCase;
 import pl.cleankod.exchange.core.usecase.FindAccountUseCase;
 import pl.cleankod.exchange.entrypoint.AccountController;
 import pl.cleankod.exchange.entrypoint.ExceptionHandlerAdvice;
+import pl.cleankod.exchange.entrypoint.service.AccountLookupService;
 import pl.cleankod.exchange.provider.AccountInMemoryRepository;
 import pl.cleankod.exchange.provider.CurrencyConversionNbpService;
 import pl.cleankod.exchange.provider.nbp.ExchangeRatesNbpClient;
@@ -104,6 +103,6 @@ public class ApplicationInitializer {
     @Bean
     AccountLookupService accountLookupService(FindAccountAndConvertCurrencyUseCase findAccountAndConvertCurrencyUseCase,
                                               FindAccountUseCase findAccountUseCase) {
-        return new AccountLookupWithOptionalCurrencyUseCase(findAccountAndConvertCurrencyUseCase, findAccountUseCase);
+        return new AccountLookupService(findAccountAndConvertCurrencyUseCase, findAccountUseCase);
     }
 }

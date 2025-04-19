@@ -3,7 +3,7 @@ package pl.cleankod.exchange.entrypoint;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.cleankod.exchange.core.domain.Account;
-import pl.cleankod.exchange.core.service.AccountLookupService;
+import pl.cleankod.exchange.entrypoint.service.AccountLookupService;
 
 @RestController
 @RequestMapping("/accounts")

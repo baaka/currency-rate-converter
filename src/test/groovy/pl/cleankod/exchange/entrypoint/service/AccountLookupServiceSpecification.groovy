@@ -1,7 +1,6 @@
-package pl.cleankod.exchange.core.service
+package pl.cleankod.exchange.entrypoint.service
 
 import pl.cleankod.exchange.core.domain.Account
-import pl.cleankod.exchange.core.usecase.AccountLookupWithOptionalCurrencyUseCase
 import pl.cleankod.exchange.core.usecase.FindAccountAndConvertCurrencyUseCase
 import pl.cleankod.exchange.core.usecase.FindAccountUseCase
 import spock.lang.Specification
@@ -9,7 +8,7 @@ import spock.lang.Specification
 class AccountLookupServiceSpecification extends Specification {
     def findAccountAndConvertCurrencyUseCase = Mock(FindAccountAndConvertCurrencyUseCase)
     def findAccountUseCase = Mock(FindAccountUseCase)
-    def accountLookupService = new AccountLookupWithOptionalCurrencyUseCase(findAccountAndConvertCurrencyUseCase, findAccountUseCase)
+    def accountLookupService = new AccountLookupService(findAccountAndConvertCurrencyUseCase, findAccountUseCase)
 
     def "test account lookup by ID with currency"() {
         given:
