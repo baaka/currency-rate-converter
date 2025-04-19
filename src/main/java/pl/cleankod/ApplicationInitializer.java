@@ -20,6 +20,7 @@ import pl.cleankod.exchange.entrypoint.ExceptionHandlerAdvice;
 import pl.cleankod.exchange.provider.AccountInMemoryRepository;
 import pl.cleankod.exchange.provider.CurrencyConversionNbpService;
 import pl.cleankod.exchange.provider.nbp.ExchangeRatesNbpClient;
+import pl.cleankod.exchange.provider.nbp.decoder.ErrorDecoderNbpClient;
 
 import java.util.Currency;
 
@@ -42,6 +43,7 @@ public class ApplicationInitializer {
                 .client(new ApacheHttpClient())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
+                .errorDecoder(new ErrorDecoderNbpClient())
                 .target(ExchangeRatesNbpClient.class, nbpApiBaseUrl);
     }
 
