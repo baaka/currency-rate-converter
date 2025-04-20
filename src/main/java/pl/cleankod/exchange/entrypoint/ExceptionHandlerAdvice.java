@@ -15,11 +15,17 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler({
             CurrencyConversionException.class,
-            IllegalArgumentException.class,
-            ExchangeRatesNbpClientException.class
+            ExchangeRatesNbpClientException.class,
+            IllegalArgumentException.class
     })
-    protected ResponseEntity<ApiError> handleBadRequest(RuntimeException ex) {
+    protected ResponseEntity<ApiError> handleKnownExceptions(RuntimeException ex) {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.badRequest().body(new ApiError(ex.getMessage()));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<ApiError> handleUnexpectedExceptions(RuntimeException ex) {
+        log.error("Unhandled runtime exception: {}", ex.getMessage(), ex);
+        return ResponseEntity.badRequest().body(new ApiError("An unexpected error occurred. Please try again later."));
     }
 }
