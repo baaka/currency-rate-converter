@@ -1,4 +1,4 @@
-package pl.cleankod.util.cache
+package pl.cleankod.infrastructure.cache
 
 import pl.cleankod.infrastructure.cache.CacheInMemoryClient
 import pl.cleankod.infrastructure.cache.inmemory.CacheInMemoryLru
