@@ -1,4 +1,4 @@
-package pl.cleankod.util.cache.inmemory;
+package pl.cleankod.infrastructure.cache.inmemory;
 
 import java.util.Map;
 

@@ -17,7 +17,7 @@ import pl.cleankod.exchange.provider.AccountInMemoryRepository;
 import pl.cleankod.exchange.provider.CurrencyConversionNbpService;
 import pl.cleankod.exchange.provider.ExchangeRatesNbpClientProvider;
 import pl.cleankod.exchange.provider.nbp.ExchangeRatesNbpClient;
-import pl.cleankod.util.logging.TraceIdFilter;
+import pl.cleankod.infrastructure.logging.TraceIdFilter;
 
 import java.util.Currency;
 

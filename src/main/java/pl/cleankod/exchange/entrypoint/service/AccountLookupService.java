@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import pl.cleankod.exchange.core.domain.Account;
 import pl.cleankod.exchange.core.usecase.FindAccountAndConvertCurrencyUseCase;
 import pl.cleankod.exchange.core.usecase.FindAccountUseCase;
-import pl.cleankod.util.logging.LogTailUtil;
+import pl.cleankod.util.LogTailUtil;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;

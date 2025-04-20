@@ -1,7 +1,7 @@
 package pl.cleankod.util.cache
 
-
-import pl.cleankod.util.cache.inmemory.CacheInMemoryLru
+import pl.cleankod.infrastructure.cache.CacheInMemoryClient
+import pl.cleankod.infrastructure.cache.inmemory.CacheInMemoryLru
 import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicInteger

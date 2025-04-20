@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.cleankod.exchange.core.domain.Account;
 import pl.cleankod.exchange.entrypoint.service.AccountLookupService;
-import pl.cleankod.util.logging.LogTailUtil;
+import pl.cleankod.util.LogTailUtil;
 
 @RestController
 @RequestMapping("/accounts")

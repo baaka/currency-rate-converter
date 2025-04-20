@@ -6,7 +6,7 @@ import pl.cleankod.exchange.core.domain.Account;
 import pl.cleankod.exchange.core.domain.Money;
 import pl.cleankod.exchange.core.gateway.AccountRepository;
 import pl.cleankod.exchange.core.gateway.CurrencyConversionService;
-import pl.cleankod.util.logging.LogTailUtil;
+import pl.cleankod.util.LogTailUtil;
 
 import java.util.Currency;
 import java.util.Optional;

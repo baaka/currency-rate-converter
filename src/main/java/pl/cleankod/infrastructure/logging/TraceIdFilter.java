@@ -1,4 +1,4 @@
-package pl.cleankod.util.logging;
+package pl.cleankod.infrastructure.logging;
 
 import org.slf4j.MDC;
 

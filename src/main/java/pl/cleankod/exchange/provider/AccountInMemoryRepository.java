@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import pl.cleankod.exchange.core.domain.Account;
 import pl.cleankod.exchange.core.domain.Money;
 import pl.cleankod.exchange.core.gateway.AccountRepository;
-import pl.cleankod.util.logging.LogTailUtil;
+import pl.cleankod.util.LogTailUtil;
 
 import java.util.Optional;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package pl.cleankod.util.logging;
+package pl.cleankod.util;
 
 public class LogTailUtil {
     public static String maskLast(String value) {
