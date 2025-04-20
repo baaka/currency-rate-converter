@@ -3,6 +3,9 @@ plugins {
 
     // Apply the groovy plugin to also add support for Groovy (needed for Spock)
     id 'groovy'
+
+    // Test coverage
+    id 'jacoco'
 }
 
 repositories {
@@ -12,6 +15,10 @@ repositories {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+jacoco {
+    toolVersion = "0.8.13"
 }
 
 dependencies {
@@ -33,4 +40,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('jacocoTestReport') {
+    dependsOn(tasks.named('test'))
 }
