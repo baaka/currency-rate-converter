@@ -7,10 +7,9 @@ import feign.jackson.JacksonEncoder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import pl.cleankod.util.cache.CacheInMemoryClient;
-import pl.cleankod.util.cache.inmemory.CacheInMemoryLru;
 import pl.cleankod.exchange.core.gateway.AccountRepository;
 import pl.cleankod.exchange.core.gateway.CurrencyConversionService;
 import pl.cleankod.exchange.core.usecase.FindAccountAndConvertCurrencyUseCase;
@@ -24,6 +23,9 @@ import pl.cleankod.exchange.provider.nbp.ExchangeRatesNbpClient;
 import pl.cleankod.exchange.provider.nbp.decoder.ExchangeRatesNbpClienErrorDecoder;
 import pl.cleankod.exchange.provider.nbp.model.RateTableAndCurrencyCacheKey;
 import pl.cleankod.exchange.provider.nbp.model.RateWrapper;
+import pl.cleankod.util.cache.CacheInMemoryClient;
+import pl.cleankod.util.cache.inmemory.CacheInMemoryLru;
+import pl.cleankod.util.logging.TraceIdFilter;
 
 import java.util.Currency;
 
@@ -104,5 +106,13 @@ public class ApplicationInitializer {
     AccountLookupService accountLookupService(FindAccountAndConvertCurrencyUseCase findAccountAndConvertCurrencyUseCase,
                                               FindAccountUseCase findAccountUseCase) {
         return new AccountLookupService(findAccountAndConvertCurrencyUseCase, findAccountUseCase);
+    }
+
+    @Bean
+    public FilterRegistrationBean<TraceIdFilter> traceIdFilter() {
+        FilterRegistrationBean<TraceIdFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new TraceIdFilter());
+        registrationBean.setOrder(1);
+        return registrationBean;
     }
 }

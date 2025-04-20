@@ -1,13 +1,17 @@
 package pl.cleankod.exchange.provider;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.cleankod.exchange.core.domain.Account;
 import pl.cleankod.exchange.core.domain.Money;
 import pl.cleankod.exchange.core.gateway.AccountRepository;
+import pl.cleankod.util.logging.LogTailUtil;
 
 import java.util.Optional;
 import java.util.Set;
 
 public class AccountInMemoryRepository implements AccountRepository {
+    private static final Logger log = LoggerFactory.getLogger(AccountInMemoryRepository.class);
 
     private final Set<Account> accounts = Set.of(
             new Account(
@@ -24,6 +28,8 @@ public class AccountInMemoryRepository implements AccountRepository {
 
     @Override
     public Optional<Account> find(Account.Id id) {
+        log.info("Finding account with id {}", id.value());
+
         return accounts.stream()
                 .filter(account -> account.id().equals(id))
                 .findFirst();
@@ -31,6 +37,8 @@ public class AccountInMemoryRepository implements AccountRepository {
 
     @Override
     public Optional<Account> find(Account.Number number) {
+        log.info("Finding account with number {}", LogTailUtil.maskLast(number.value()));
+
         return accounts.stream()
                 .filter(account -> account.number().equals(number))
                 .findFirst();
