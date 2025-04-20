@@ -20,7 +20,13 @@ public class CacheInMemoryClient<K, V> {
     public V fetch(K key) {
         lock.lock();
         try {
-            return cache.computeIfAbsent(key, fetchFunction);
+            return cache.computeIfAbsent(key, k -> {
+                V value = fetchFunction.apply(k);
+                if (value != null) {
+                    return value;
+                }
+                throw new IllegalStateException("Fetched value is null for key: " + k);
+            });
         } finally {
             lock.unlock();
         }
